@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RG Digital</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .header {
+            background-color: white;
+            padding: 10px 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+            z-index: 100;
+        }
+
+        .header .close {
+            font-size: 1.2rem;
+            color: #4169E1;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .header .page-title {
+            font-size: 1.5rem;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+            padding-left: 1px;
+            padding-right: 50px;
+        }
+
+        .header .options {
+            font-size: 2rem;
+            color: #4169E1;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 20px;
+            position: relative;
+            left: -15px;
+        }
+
+        .verified {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .verified img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: white;
+            height: 100%;
+            overflow: hidden;
+            margin-top: 60px;
+            box-sizing: border-box;
+        }
+
+        .content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-height: 80vh;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .footer div {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .footer img {
+            width: 25px;
+            height: 25px;
+            filter: grayscale(100%);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .footer span {
+            display: block;
+            font-size: 0.8rem;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .footer .active img {
+            filter: brightness(0) saturate(100%) invert(32%) sepia(99%) saturate(579%) hue-rotate(187deg) brightness(97%) contrast(102%);
+        }
+
+        .footer .active span {
+            color: blue;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Estilo específico para o texto "Atualizado" na página 3 */
+        #page3 .verified {
+            margin-bottom: 30px; /* Move o texto para cima */
+        }
+    </style>
+</head>
+<body>
+    <!-- Página 1: Frente do RG -->
+    <div id="page1" class="content">
+        <div class="header">
+            <span class="close" onclick="showPage('page1', this)">Fechar</span>
+            <div class="page-title">Frente</div>
+            <span class="options" onclick="openOptions()">&#8230;</span>
+        </div>
+        <div class="verified">
+            <img src="verificar.png" alt="Ícone de Verificado">
+            <span>Atualizado em 26/11/2024 às 01:15</span>
+        </div>
+        <img src="rgfrente.jpg" alt="Frente do RG">
+    </div>
+
+    <!-- Página 2: Verso do RG -->
+    <div id="page2" class="content hidden">
+        <div class="header">
+            <span class="close" onclick="showPage('page2', this)">Fechar</span>
+            <div class="page-title">Verso</div>
+            <span class="options" onclick="openOptions()">&#8230;</span>
+        </div>
+        <div class="verified">
+            <img src="verificar.png" alt="Ícone de Verificado">
+            <span>Atualizado em 26/11/2024 às 01:15</span>
+        </div>
+        <img src="rgtras.jpg" alt="Verso do RG">
+    </div>
+
+    <!-- Página 3: QR Code -->
+    <div id="page3" class="content hidden">
+        <div class="header">
+            <span class="close" onclick="showPage('page3', this)">Fechar</span>
+            <div class="page-title">QR Code</div>
+            <span class="options" onclick="openOptions()">&#8230;</span>
+        </div>
+        <div class="verified">
+            <img src="verificar.png" alt="Ícone de Verificado">
+            <span>Atualizado em 26/11/2024 às 01:15</span>
+        </div>
+        <img src="qrcode-removebg-preview.png" alt="QR Code">
+    </div>
+
+    <div class="footer">
+        <div onclick="showPage('page1', this)">
+            <img src="icons8-usuário-de-gênero-neutro-24.png" alt="Ícone de perfil">
+            <span>Frente</span>
+        </div>
+        <div onclick="showPage('page2', this)">
+            <img src="icons8-impressão-digital-100 (1).png" alt="Ícone de segurança">
+            <span>Verso</span>
+        </div>
+        <div onclick="showPage('page3', this)">
+            <img src="Untitled_Project-removebg-preview.png" alt="Ícone de QR Code">
+            <span>QR Code</span>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId, element) {
+            document.querySelectorAll('.content').forEach(page => page.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+            document.querySelectorAll('.footer div').forEach(div => div.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function openOptions() {
+            alert("Abrindo opções...");
+        }
+    </script>
+</body>
+</html>
